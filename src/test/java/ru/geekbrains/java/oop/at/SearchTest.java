@@ -1,6 +1,10 @@
 package ru.geekbrains.java.oop.at;
 
+import org.hamcrest.Matcher;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.core.IsNot;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -10,6 +14,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import ru.geekbrains.java.oop.at.base.TestBase;
 
 import static java.lang.Thread.sleep;
+import static org.hamcrest.Matchers.*;
 
 public class SearchTest extends TestBase {
 
@@ -23,72 +28,44 @@ public class SearchTest extends TestBase {
     int testsNumNotGoal = 0;
     String companyName = "Образовательный портал GeekBrains";
 
+    @DisplayName("Тестирование поиска")
     @Test
     public void checkSearch() throws InterruptedException {
         chromeDriver.findElement(By.cssSelector("[class=\"show-search-form\"] [class=\"svg-icon icon-search \"]")).click();
         chromeDriver.findElement(By.cssSelector("input[class=\"search-panel__search-field\"]")).sendKeys("java");
 
-        /*-----Профессии-----*/
+        /*-----Профессии. Hamcrest-----*/
         int profNumDigit = Integer.parseInt(chromeDriver.findElement(By.cssSelector("#professions > div.stickyTitleWrap > header > ul > li > a > span")).getText());
-        if (profNumDigit >= profNumGoal) {
-            System.out.println("Тест пройден. Профессий не менее " + profNumGoal);
-        } else {
-            System.out.println("Ошибка! Профессий меньше " + profNumGoal);
-        }
+        MatcherAssert.assertThat(profNumDigit, greaterThanOrEqualTo(profNumGoal));
 
-        /*-----Курсы-----*/
+        /*-----Курсы. Hamcrest-----*/
         int coursesNumDigit = Integer.parseInt(chromeDriver.findElement(By.xpath("/html/body/div[1]/div[7]/div/div[2]/div/div/div[2]/div[1]/header/ul/li/a/span")).getText());
-        if (coursesNumDigit > coursesNumGoal) {
-            System.out.println("Тест пройден. Курсов больше " + coursesNumGoal);
-        } else {
-            System.out.println("Ошибка! Курсов меньше " + coursesNumGoal);
-        }
+        MatcherAssert.assertThat(coursesNumDigit, greaterThan(coursesNumGoal));
 
-        /*-----Вебинары. Количество-----*/
+        /*-----Вебинары. Количество. Hamcrest-----*/
         int eventsNumDigit = Integer.parseInt(chromeDriver.findElement(By.xpath("/html/body/div[1]/div[7]/div/div[2]/div/div/div[3]/div[1]/header/ul/li/a/span")).getText());
-        if (eventsNumDigit > eventsMinNum || eventsNumDigit < eventsMaxNum) {
-            System.out.println("Тест пройден. Вебинаров больше " + eventsMinNum + " и меньше " + eventsMaxNum);
-        } else {
-            System.out.println("Ошибка! Вебинаров меньше " + eventsMinNum + " или больше " + eventsMaxNum);
-        }
+        MatcherAssert.assertThat(eventsNumDigit, allOf(
+                greaterThan(eventsMinNum),
+                lessThan(eventsMaxNum)
+        ));
 
-        /*-----Вебинары. Результат поиска-----*/
-        Assertions.assertEquals(
-                firstEvent,
-                chromeDriver.findElement(By.xpath("/html/body/div[1]/div[7]/div/div[2]/div/div/div[3]/div[2]/div/div[1]/div/a")).getText()
-        );
-        System.out.println("Тест пройден. Первый вебинар: " + firstEvent);
+        /*-----Вебинары. Результат поиска. Hamcrest-----*/
+        MatcherAssert.assertThat(chromeDriver.findElement(By.xpath("/html/body/div[1]/div[7]/div/div[2]/div/div/div[3]/div[2]/div/div[1]/div/a")).getText(), equalTo(firstEvent));
 
-        /*-----Блоги-----*/
+        /*-----Блоги. Hamcrest-----*/
         int postsNumDigit = Integer.parseInt(chromeDriver.findElement(By.xpath("/html/body/div[1]/div[7]/div/div[2]/div/div/div[4]/div[1]/header/ul/li/a/span")).getText());
-        if (postsNumDigit > postsNumGoal) {
-            System.out.println("Тест пройден. Блогов больше " + postsNumGoal);
-        } else {
-            System.out.println("Ошибка! Блогов меньше " + postsNumGoal);
-        }
+        MatcherAssert.assertThat(postsNumDigit, greaterThan(postsNumGoal));
 
-        /*-----Форумы-----*/
+        /*-----Форумы. Hamcrest-----*/
         int topicsNumDigit = Integer.parseInt(chromeDriver.findElement(By.xpath("/html/body/div[1]/div[7]/div/div[2]/div/div/div[5]/div[1]/header/ul/li/a/span")).getText());
-        if (topicsNumDigit != topicsNumNotGoal) {
-            System.out.println("Тест пройден. Форумов НЕ " + topicsNumNotGoal);
-        } else {
-            System.out.println("Ошибка! Форумов ровно" + topicsNumNotGoal);
-        }
+        MatcherAssert.assertThat(topicsNumDigit, is(not(topicsNumNotGoal)));
 
-        /*-----Тесты-----*/
+        /*-----Тесты. Hamcrest-----*/
         int testsNumDigit = Integer.parseInt(chromeDriver.findElement(By.xpath("/html/body/div[1]/div[7]/div/div[2]/div/div/div[6]/div[1]/header/ul/li/a/span")).getText());
-        if (testsNumDigit != testsNumNotGoal) {
-            System.out.println("Тест пройден. Тестов НЕ " + testsNumNotGoal);
-        } else {
-            System.out.println("Ошибка! Тестов ровно" + testsNumNotGoal);
-        }
+        MatcherAssert.assertThat(testsNumDigit, is(not(testsNumNotGoal)));
 
-        /*-----Вебинары. Результат поиска-----*/
-        Assertions.assertEquals(
-                companyName,
-                chromeDriver.findElement(By.xpath("/html/body/div[1]/div[7]/div/div[2]/div/div/div[7]/div[2]/div/div[2]/div/section/div[2]/h3/a")).getText()
-        );
-        System.out.println("Тест пройден. В результатах отображается: " + companyName);
+        /*-----Проекты и компании. Результат поиска. Hamcrest-----*/
+        MatcherAssert.assertThat(chromeDriver.findElement(By.xpath("/html/body/div[1]/div[7]/div/div[2]/div/div/div[7]/div[2]/div/div[2]/div/section/div[2]/h3/a")).getText(), equalTo(companyName));
     }
 }
 
