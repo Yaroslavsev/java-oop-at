@@ -1,17 +1,10 @@
 package ru.geekbrains.java.oop.at;
 
-import org.hamcrest.Matcher;
 import org.hamcrest.MatcherAssert;
-import org.hamcrest.core.IsNot;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.support.ui.ExpectedCondition;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import ru.geekbrains.java.oop.at.base.TestBase;
+import ru.geekbrains.java.oop.at.block.Search;
 
 import static java.lang.Thread.sleep;
 import static org.hamcrest.Matchers.*;
@@ -28,48 +21,31 @@ public class SearchTest extends TestBase {
     int testsNumNotGoal = 0;
     String companyName = "Образовательный портал GeekBrains";
 
-    @DisplayName("Тестирование поиска")
+    @DisplayName("Тестирование поиска с PageObject")
     @Test
-    public void checkSearch() throws InterruptedException {
-        chromeDriver.findElement(By.cssSelector("[class=\"show-search-form\"] [class=\"svg-icon icon-search \"]")).click();
-        chromeDriver.findElement(By.cssSelector("input[class=\"search-panel__search-field\"]")).sendKeys("java");
+    void searchChecks() {
 
-        /*-----Профессии. Hamcrest-----*/
-        int profNumDigit = Integer.parseInt(chromeDriver.findElement(By.cssSelector("#professions > div.stickyTitleWrap > header > ul > li > a > span")).getText());
-        MatcherAssert.assertThat(profNumDigit, greaterThanOrEqualTo(profNumGoal));
+        Search search = new Search(driver);
 
-        /*-----Курсы. Hamcrest-----*/
-        int coursesNumDigit = Integer.parseInt(chromeDriver.findElement(By.xpath("/html/body/div[1]/div[7]/div/div[2]/div/div/div[2]/div[1]/header/ul/li/a/span")).getText());
-        MatcherAssert.assertThat(coursesNumDigit, greaterThan(coursesNumGoal));
+        search.getButton("Иконка поиска").click();
+        search.getButton("Поле поиска").sendKeys("java");
 
-        /*-----Вебинары. Количество. Hamcrest-----*/
-        int eventsNumDigit = Integer.parseInt(chromeDriver.findElement(By.xpath("/html/body/div[1]/div[7]/div/div[2]/div/div/div[3]/div[1]/header/ul/li/a/span")).getText());
-        MatcherAssert.assertThat(eventsNumDigit, allOf(
-                greaterThan(eventsMinNum),
-                lessThan(eventsMaxNum)
-        ));
+        search.greaterThanOrEqualTo("Профессии", profNumGoal);
 
-        /*-----Вебинары. Результат поиска. Hamcrest-----*/
-        MatcherAssert.assertThat(chromeDriver.findElement(By.xpath("/html/body/div[1]/div[7]/div/div[2]/div/div/div[3]/div[2]/div/div[1]/div/a")).getText(), equalTo(firstEvent));
+        search.greaterThan("Курсы", coursesNumGoal);
 
-        /*-----Блоги. Hamcrest-----*/
-        int postsNumDigit = Integer.parseInt(chromeDriver.findElement(By.xpath("/html/body/div[1]/div[7]/div/div[2]/div/div/div[4]/div[1]/header/ul/li/a/span")).getText());
-        MatcherAssert.assertThat(postsNumDigit, greaterThan(postsNumGoal));
+        search.greaterThan("Вебинары", eventsMinNum);
+        search.lessThan("Вебинары", eventsMaxNum);
 
-        /*-----Форумы. Hamcrest-----*/
-        int topicsNumDigit = Integer.parseInt(chromeDriver.findElement(By.xpath("/html/body/div[1]/div[7]/div/div[2]/div/div/div[5]/div[1]/header/ul/li/a/span")).getText());
-        MatcherAssert.assertThat(topicsNumDigit, is(not(topicsNumNotGoal)));
+        search.greaterThan("Блоги", postsNumGoal);
 
-        /*-----Тесты. Hamcrest-----*/
-        int testsNumDigit = Integer.parseInt(chromeDriver.findElement(By.xpath("/html/body/div[1]/div[7]/div/div[2]/div/div/div[6]/div[1]/header/ul/li/a/span")).getText());
-        MatcherAssert.assertThat(testsNumDigit, is(not(testsNumNotGoal)));
+        search.isNot("Форум", topicsNumNotGoal);
 
-        /*-----Проекты и компании. Результат поиска. Hamcrest-----*/
-        MatcherAssert.assertThat(chromeDriver.findElement(By.xpath("/html/body/div[1]/div[7]/div/div[2]/div/div/div[7]/div[2]/div/div[2]/div/section/div[2]/h3/a")).getText(), equalTo(companyName));
+        search.isNot("Тесты", testsNumNotGoal);
+
+
+        search.checkSectionText(firstEvent, "Вебинары");
+
+        search.checkSectionText(companyName, "Проекты и компании");
     }
 }
-
-
-
-
-
