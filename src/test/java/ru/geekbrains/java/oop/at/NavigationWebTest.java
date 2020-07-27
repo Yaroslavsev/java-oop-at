@@ -15,7 +15,6 @@ import static java.lang.Thread.sleep;
 @DisplayName("Тестирование навигации с PageObject")
 public class NavigationWebTest extends WebTestBase {
 
-    @DisplayName("Параметризованное тестирование")
     @ParameterizedTest
     @MethodSource("listOfNavChecks")
     void navChecks(String pageName) {

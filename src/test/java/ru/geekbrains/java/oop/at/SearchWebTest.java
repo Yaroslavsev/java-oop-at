@@ -8,6 +8,7 @@ import ru.geekbrains.java.oop.at.block.Search;
 
 import static java.lang.Thread.sleep;
 
+@DisplayName("Тестирование поиска с PageObject")
 public class SearchWebTest extends WebTestBase {
 
     int profNumGoal = 2;
@@ -20,7 +21,6 @@ public class SearchWebTest extends WebTestBase {
     int testsNumNotGoal = 0;
     String companyName = "Образовательный портал GeekBrains";
 
-    @DisplayName("Тестирование поиска с PageObject")
     @Test
     void searchChecks() {
 
