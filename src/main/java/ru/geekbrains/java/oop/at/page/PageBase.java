@@ -1,6 +1,7 @@
 package ru.geekbrains.java.oop.at.page;
 
 import io.qameta.allure.Step;
+import lombok.Getter;
 import org.junit.jupiter.api.Assertions;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -10,6 +11,7 @@ import org.openqa.selenium.support.PageFactory;
 import ru.geekbrains.java.oop.at.block.Navigation;
 import ru.geekbrains.java.oop.at.block.Search;
 
+@Getter
 public class PageBase extends PageFactory {
 
     @FindBy(css = "[id=\"top-menu\"]")
@@ -31,21 +33,5 @@ public class PageBase extends PageFactory {
     @Step("Проверяем имя страницы {expectedPageName}")
     public void checkPageName(String expectedPageName){
         Assertions.assertEquals(expectedPageName, pageName.getText());
-    }
-
-    public WebElement getHeader() {
-        return header;
-    }
-
-    public WebElement getFooter() {
-        return footer;
-    }
-
-    public WebElement getPageName() {
-        return pageName;
-    }
-
-    public Navigation getNavigation() {
-        return navigation;
     }
 }
