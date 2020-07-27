@@ -4,7 +4,7 @@ import static org.hamcrest.Matchers.*;
 import org.hamcrest.MatcherAssert;
 import org.junit.jupiter.api.Test;
 
-public class NumbersTest {
+public class NumbersExamples {
     @Test
     void greaterThanTest() {
         double numberActual = 100.00;

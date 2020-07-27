@@ -1,21 +1,19 @@
 package ru.geekbrains.java.oop.at;
 
+import io.qameta.allure.Feature;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
-import org.openqa.selenium.By;
-import org.openqa.selenium.support.PageFactory;
-import ru.geekbrains.java.oop.at.base.TestBase;
-import ru.geekbrains.java.oop.at.block.Navigation;
+import ru.geekbrains.java.oop.at.base.WebTestBase;
 import ru.geekbrains.java.oop.at.page.PageBase;
-import org.junit.jupiter.api.BeforeEach;
+
 import java.util.stream.Stream;
 
 import static java.lang.Thread.sleep;
 
 @DisplayName("Тестирование навигации с PageObject")
-public class NavigationTest extends TestBase {
+public class NavigationWebTest extends WebTestBase {
 
     @DisplayName("Параметризованное тестирование")
     @ParameterizedTest

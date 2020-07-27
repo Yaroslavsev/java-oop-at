@@ -9,7 +9,7 @@ import static org.hamcrest.CoreMatchers.not;
 
 import static org.hamcrest.Matchers.*;
 
-public class MultiMatchersTest {
+public class MultiMatchersExamples {
     @Test
     void allOfTest(){
         int number = 100;

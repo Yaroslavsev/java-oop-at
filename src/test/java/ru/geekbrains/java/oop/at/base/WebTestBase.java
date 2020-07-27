@@ -12,7 +12,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.util.Arrays;
 import java.util.concurrent.TimeUnit;
 
-public abstract class TestBase {
+public abstract class WebTestBase {
 
 //    public ChromeDriver chromeDriver;
     public Dimension dimension;

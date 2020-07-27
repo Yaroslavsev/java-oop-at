@@ -1,15 +1,14 @@
 package ru.geekbrains.java.oop.at;
 
-import org.hamcrest.MatcherAssert;
+import io.qameta.allure.Feature;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import ru.geekbrains.java.oop.at.base.TestBase;
+import ru.geekbrains.java.oop.at.base.WebTestBase;
 import ru.geekbrains.java.oop.at.block.Search;
 
 import static java.lang.Thread.sleep;
-import static org.hamcrest.Matchers.*;
 
-public class SearchTest extends TestBase {
+public class SearchWebTest extends WebTestBase {
 
     int profNumGoal = 2;
     int coursesNumGoal = 15;

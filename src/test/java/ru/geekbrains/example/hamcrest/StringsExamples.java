@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.hamcrest.Matchers.*;
 
-public class StringsTest {
+public class StringsExamples {
     @Test
     void equalToIgnoringCaseTest() {
         String name = "АзБуКа";

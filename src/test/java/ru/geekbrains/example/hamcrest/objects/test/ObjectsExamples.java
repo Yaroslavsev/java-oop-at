@@ -7,7 +7,7 @@ import org.junit.jupiter.params.shadow.com.univocity.parsers.common.processor.Ba
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
-public class ObjectsTest {
+public class ObjectsExamples {
     @Test
     void sameInstanceTest() {
         String name = "Bob";

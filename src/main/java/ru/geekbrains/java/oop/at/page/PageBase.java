@@ -1,5 +1,6 @@
 package ru.geekbrains.java.oop.at.page;
 
+import io.qameta.allure.Step;
 import org.junit.jupiter.api.Assertions;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -27,6 +28,7 @@ public class PageBase extends PageFactory {
         navigation = new Navigation(driver);
     }
 
+    @Step("Проверяем имя страницы {expectedPageName}")
     public void checkPageName(String expectedPageName){
         Assertions.assertEquals(expectedPageName, pageName.getText());
     }

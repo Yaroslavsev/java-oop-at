@@ -1,5 +1,6 @@
 package ru.geekbrains.java.oop.at.block;
 
+import io.qameta.allure.Step;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Assertions;
@@ -50,6 +51,7 @@ public class Search extends PageFactory {
     public Search(WebDriver driver){ initElements(driver, this);
     }
 
+    @Step("Получаем числовое значение секции {sectionName}")
     public int getSectionDigits(String sectionName){
         switch (sectionName) {
             case "Профессии":
@@ -68,6 +70,7 @@ public class Search extends PageFactory {
         throw new RuntimeException("на странице нет раздела " + sectionName);
     }
 
+    @Step("Получаем текстовое значение секции: {sectionName}")
     public WebElement getSectionText(String sectionName){
         switch (sectionName) {
             case "Вебинары":
@@ -82,6 +85,7 @@ public class Search extends PageFactory {
         Assertions.assertEquals(expectedSectionText, getSectionText(sectionName).getText());
     }
 
+    @Step("Нажимаем на кнопку/вводим значание на кнопку/в поле: {nameButton}")
     public WebElement getButton (String nameButton){
         switch (nameButton) {
             case "Иконка поиска": {
@@ -94,23 +98,23 @@ public class Search extends PageFactory {
         throw new RuntimeException("на странице нет кнопки " + nameButton);
     }
 
+    @Step("Проверяем, что число из поля {sectionName} больше или равно значению {numGoal}")
     public void greaterThanOrEqualTo(String sectionName, int numGoal){
         MatcherAssert.assertThat(getSectionDigits(sectionName), Matchers.greaterThanOrEqualTo(numGoal));
     }
 
+    @Step("Проверяем, что число из поля {sectionName} больше значения {numGoal}")
     public void greaterThan(String sectionName, int numGoal){
         MatcherAssert.assertThat(getSectionDigits(sectionName), Matchers.greaterThan(numGoal));
     }
 
+    @Step("Проверяем, что число из поля {sectionName} меньше значения {numGoal}")
     public void lessThan(String sectionName, int numGoal){
         MatcherAssert.assertThat(getSectionDigits(sectionName), Matchers.lessThan(numGoal));
     }
 
+    @Step("Проверяем, что число из поля {sectionName} не равно значению {numGoal}")
     public void isNot(String sectionName, int numGoal){
         MatcherAssert.assertThat(getSectionDigits(sectionName), Matchers.is(not(numGoal)));
     }
-
-
-
-
 }
