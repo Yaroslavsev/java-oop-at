@@ -1,4 +1,4 @@
-package ru.geekbrains.java.oop.at.collectionsHomework.firstTask;
+package ru.geekbrains.java.oop.at.collectionsHomework;
 
 import java.util.*;
 
