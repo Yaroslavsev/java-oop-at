@@ -1,14 +1,18 @@
-package ru.geekbrains.java.oop.at;
+package ru.geekbrains.java.oop.at.tests;
 
 import io.qameta.allure.Feature;
+import io.qameta.allure.Step;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.parallel.Execution;
+import org.junit.jupiter.api.parallel.ExecutionMode;
 import ru.geekbrains.java.oop.at.base.WebTestBase;
 import ru.geekbrains.java.oop.at.block.Search;
 
 import static java.lang.Thread.sleep;
 
-@DisplayName("Тестирование поиска с PageObject")
+@Execution(ExecutionMode.CONCURRENT)
+@DisplayName("Поиск")
 public class SearchWebTest extends WebTestBase {
 
     int profNumGoal = 2;
@@ -21,6 +25,7 @@ public class SearchWebTest extends WebTestBase {
     int testsNumNotGoal = 0;
     String companyName = "Образовательный портал GeekBrains";
 
+    @DisplayName("Проверяем количество и содержание элементов в разделах")
     @Test
     void searchChecks() {
 
